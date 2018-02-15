@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using RuachSignups.Models;
+using Signups.Core;
 
 namespace RuachSignups.Controllers
 {
@@ -13,6 +15,19 @@ namespace RuachSignups.Controllers
         public IActionResult Index()
         {
             return View();
+        }
+
+        public IActionResult Signups()
+        {
+            using (var client = new WebClient())
+            {
+                var jsonData = client.DownloadString("https://www.hebcal.com/hebcal/?v=1&cfg=json&year=now&month=x&maj=on&nx=on&ss=on&s=on&i=off");
+
+                var readings = Parshiot.Parse(jsonData)
+                    .Select(r => new Shabbat(r));
+
+                return View(readings);
+            }
         }
 
         public IActionResult About()

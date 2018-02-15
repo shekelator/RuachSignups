@@ -5,10 +5,6 @@ open Xunit
 open Signups.Core
 
 [<Fact>]
-let ``My test`` () =
-    Assert.Equal((Parshiot.hello "friend"), "Hello friend")
-
-[<Fact>]
 let ``Gets items`` () =
     let data = File.ReadAllText("./hebcal-data.json")
     let result = Parshiot.Parse(data)
