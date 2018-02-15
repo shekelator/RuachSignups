@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="Parshiot.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="hebcal-data.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Play.fsx" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FSharp.Data" Version="2.4.4" />
+    <PackageReference Include="System.Globalization" Version="4.3.0" />
+  </ItemGroup>
+
+</Project>
