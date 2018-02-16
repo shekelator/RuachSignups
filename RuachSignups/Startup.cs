@@ -43,7 +43,7 @@ namespace RuachSignups
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Signups}/{action=Index}/{id?}");
             });
         }
     }
