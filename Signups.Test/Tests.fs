@@ -31,4 +31,4 @@ let ``Maftir is left out unless it's a special shabbat`` () =
     let data = File.ReadAllText("./hebcal-data.json")
     let result = Parshiot.ParseWithAliyah data (Some 5)
     let parasha = Seq.find (fun (x: Parshiot.Reading) -> x.Title = "Parashat Ki Tisa") result
-    Assert.Equal("", parasha.Leyning.Maftir)
+    Assert.False(parasha.Leyning.Maftir.IsSome)

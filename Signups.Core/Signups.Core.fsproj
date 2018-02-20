@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <Compile Include="Parshiot.fs" />
+    <Compile Include="Shabbat.fs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -17,7 +17,7 @@ namespace RuachSignups.Controllers
                 var jsonData = client.DownloadString("https://www.hebcal.com/hebcal/?v=1&cfg=json&year=now&month=x&maj=on&nx=on&ss=on&s=on&i=off");
 
                 var readings = Parshiot.Parse(jsonData)
-                    .Select(r => new Shabbat(r));
+                    .Select(r => new ShabbatModel(r));
 
                 return View(readings);
             }

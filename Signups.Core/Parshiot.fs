@@ -3,14 +3,11 @@ open FSharp.Data
 open System
 
 module Parshiot =
-    let hello name =
-        sprintf "Hello %s" name
-
     type HcReadings = JsonProvider<"./hebcal-data.json">
     type Leyning = {
         Torah: string;
         Haftarah: string;
-        Maftir: string
+        Maftir: string option
     }
 
     type Reading = {
@@ -21,8 +18,8 @@ module Parshiot =
     }
 
     let maftirIfSpecial (maftir : string) = 
-        if maftir.Contains("|") then maftir
-        else ""
+        if maftir.Contains("|") then Some maftir
+        else None
 
     let ConvertLeyning (leyning : HcReadings.Leyning option, aliyah: int option) =
         match leyning with
@@ -41,7 +38,7 @@ module Parshiot =
                     Haftarah = x.Haftarah; 
                     Maftir = maftirIfSpecial x.Maftir
                 }
-            | None -> {Torah = ""; Haftarah = ""; Maftir = ""}
+            | None -> {Torah = ""; Haftarah = ""; Maftir = None}
         
 
     let ParseWithAliyah data (aliyah: int option) = 

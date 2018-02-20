@@ -3,9 +3,9 @@ using Signups.Core;
 
 namespace RuachSignups.Models
 {
-    public class Shabbat
+    public class ShabbatModel
     {
-        public Shabbat(Parshiot.Reading reading)
+        public ShabbatModel(Parshiot.Reading reading)
         {
             Date = reading.Date;
             Title = reading.Title;
