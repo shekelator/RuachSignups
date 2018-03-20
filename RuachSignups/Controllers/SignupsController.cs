@@ -1,7 +1,9 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using RuachSignups.Infrastructure;
 using RuachSignups.Models;
 using Signups.Core;
 
@@ -9,6 +11,13 @@ namespace RuachSignups.Controllers
 {
     public class SignupsController : Controller
     {
+        private readonly ShabbatRepository m_repository;
+
+        public SignupsController(ShabbatRepository repository)
+        {
+            m_repository = repository;
+        }
+
         // GET: Signups
         public ActionResult Index()
         {
@@ -32,6 +41,15 @@ namespace RuachSignups.Controllers
         // GET: Signups/Create
         public ActionResult Create()
         {
+            return View();
+        }
+
+        [HttpPost]
+        // [ValidateAntiForgeryToken]
+        public ActionResult CreateAll()
+        {
+            var shabbats = GetReadings().Select(Shabbat.parashaToShabbat);
+            m_repository.UpsertMany(shabbats).GetAwaiter().GetResult();
             return View();
         }
 
@@ -97,5 +115,18 @@ namespace RuachSignups.Controllers
                 return View();
             }
         }
+
+        private IEnumerable<Parshiot.Reading> GetReadings()
+        {
+            using (var client = new WebClient())
+            {
+                var jsonData = client.DownloadString("https://www.hebcal.com/hebcal/?v=1&cfg=json&year=now&month=x&maj=on&nx=on&ss=on&s=on&i=off");
+
+                var readings = Parshiot.Parse(jsonData);
+
+                return readings;
+            }
+        }
+
     }
 }
