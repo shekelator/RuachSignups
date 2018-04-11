@@ -29,7 +29,12 @@
                 @Html.DisplayFor(modelItem => item.Date)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Title)
+                @Html.DisplayFor(modelItem => item.Title)<br/>
+                Torah: @Html.DisplayFor(modelItem => item.Torah)<br/>
+                Haftarah: @Html.DisplayFor(modelItem => item.Haftarah)<br/>
+                @if (item.Maftir != null) {
+                    <span>Torah: </span>@Html.DisplayFor(modelItem => item.Maftir)<br/>
+                }
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
