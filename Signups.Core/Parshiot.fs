@@ -54,6 +54,6 @@ module Parshiot =
                 })
 
     let Parse data = 
-        ParseWithAliyah data None
+        ParseWithAliyah data (Some 5)
 
 
