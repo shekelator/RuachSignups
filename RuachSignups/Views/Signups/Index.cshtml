@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<RuachSignups.Models.ShabbatModel>
 
 @{
-    ViewData["Title"] = "Signups";
+    ViewData["Title"] = "Reading Signups";
 }
 
 <h2>Signups</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Create New</a> | 
     <a asp-action="CreateAll">Save readings to DB</a>
 </p>
 <table class="table">
@@ -30,6 +30,13 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                Torah: @Html.DisplayFor(i => item.Torah)<br/>
+                @if (item.Maftir != null) {
+                    <span>Maftir: </span>@Html.DisplayFor(i => item.Maftir) <br/>
+                }
+                Haftarah: @Html.DisplayFor(i => item.Haftarah) <br/>
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |

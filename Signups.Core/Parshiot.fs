@@ -56,4 +56,3 @@ module Parshiot =
     let Parse data = 
         ParseWithAliyah data None
 
-

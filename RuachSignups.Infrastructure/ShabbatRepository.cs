@@ -13,7 +13,7 @@ namespace RuachSignups.Infrastructure
     public class ShabbatRepository
     {
         private readonly MongoClient m_mongoClient;
-        private const string DbName = "signups";
+        private const string DbName = "hasharet";
         private const string CollectionName = "shabbats";
 
         public ShabbatRepository(string connectionString)
