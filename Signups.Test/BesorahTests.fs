@@ -7,12 +7,7 @@ open Signups.Core
 
 [<Fact>]
 let ``Gets items`` () =
-    let data = File.ReadAllText("./hebcal-data.json")
-    let result = Parshiot.Parse(data)
-    let parasha = Seq.find (fun (x: Parshiot.Reading) -> x.Title = "Parashat Shemot") result
-    let shabbat = Shabbat.parashaToShabbat parasha
-    Assert.Equal(new DateTime(2018, 1, 6), shabbat.Date)
-    Assert.Equal("Parashat Shemot", shabbat.Title)
-    Assert.Contains(shabbat.Openings, fun x -> x.Title.StartsWith("Torah (Parashat Shemot)"))
-    Assert.True(shabbat.Id.IsNone)
+    let data = File.ReadAllText("./besorah-data.json")
+    let result = Besorot.GetReading data "A" "Parashat Bereshit"
+    Assert.Equal("John 1:1–18", result.Reading)
 
