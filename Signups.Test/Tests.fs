@@ -13,9 +13,9 @@ let ``Gets items`` () =
 [<Fact>]
 let ``Gets Torah portion without aliyah`` () =
     let data = File.ReadAllText("./hebcal-data.json")
-    let result = Parshiot.Parse(data)
+    let result = Parshiot.ParseWithAliyah data (Some 5)
     let parasha = Seq.find (fun (x: Parshiot.Reading) -> x.Title = "Parashat Chukat") result
-    Assert.Equal("Numbers 19:1 - 22:1", parasha.Leyning.Torah)
+    Assert.Equal("Numbers 20:22 - 21:9", parasha.Leyning.Torah)
     Assert.Equal("Judges 11:1 - 11:33", parasha.Leyning.Haftarah)
 
 [<Fact>]
