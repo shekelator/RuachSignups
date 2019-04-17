@@ -2,6 +2,7 @@
 using Microsoft.FSharp.Core;
 using Signups.Core;
 using Microsoft.FSharp.Core;
+using System.ComponentModel.DataAnnotations;
 
 namespace RuachSignups.Models
 {
@@ -19,6 +20,7 @@ namespace RuachSignups.Models
             Besorah = "N/A";
         }
 
+        [DisplayFormat(DataFormatString = "{0:d}")]
         public DateTime Date { get; }
         public string Title { get; }
         public string Torah { get; }

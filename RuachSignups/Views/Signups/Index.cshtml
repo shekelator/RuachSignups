@@ -23,25 +23,19 @@
         </tr>
     </thead>
     <tbody>
+@{int i = 0;}
 @foreach (var item in Model) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Date)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Title)<br/>
-                Torah: @Html.DisplayFor(modelItem => item.Torah)<br/>
-                Haftarah: @Html.DisplayFor(modelItem => item.Haftarah)<br/>
+                <input id="@($"name-{i}")" class="copyable" value="@Html.DisplayFor(modelItem => item.Title)"></input>&nbsp;<a class="copyLink" data-clipboard-target="@($"#name-{i}")">copy</a><br/>
+                Torah: <input id="@($"torah-{i}")" class="copyable" value="@Html.DisplayFor(modelItem => item.Torah)"/>&nbsp;<a class="copyLink" data-clipboard-target="@($"#torah-{i}")">copy</a><br/>
+                Haftarah: <input id="@($"haftarah-{i}")" class="copyable" value="@Html.DisplayFor(modelItem => item.Haftarah)"></input>&nbsp;<a class="copyLink" data-clipboard-target="@($"#haftarah-{i}")">copy</a><br/>
                 @if (item.Maftir != null) {
-                    <span>Torah: </span>@Html.DisplayFor(modelItem => item.Maftir)<br/>
+                    <span>Maftir: <input id="@($"maftir-{i}")" class="copyable" value="@Html.DisplayFor(modelItem => item.Maftir)"></input>&nbsp;<a class="copyLink" data-clipboard-target="@($"#maftir-{i}")">copy</a></span><br/>
                 }
-            </td>
-            <td>
-                Torah: @Html.DisplayFor(i => item.Torah)<br/>
-                @if (item.Maftir != null) {
-                    <span>Maftir: </span>@Html.DisplayFor(i => item.Maftir) <br/>
-                }
-                Haftarah: @Html.DisplayFor(i => item.Haftarah) <br/>
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
@@ -49,6 +43,7 @@
                 @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
             </td>
         </tr>
+    i++;
 }
     </tbody>
 </table>
