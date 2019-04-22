@@ -3,15 +3,6 @@
     padding-bottom: 20px;
 }
 
-input.copyable {
-    border: none;
-    display: inline;
-    font-family: inherit;
-    font-size: inherit;
-    padding: none;
-    width: 270px;
-}
-
 a.copyLink {
     font-size: smaller;
     float: right;
