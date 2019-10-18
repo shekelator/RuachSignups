@@ -2,12 +2,106 @@
 open FSharp.Data
 open System
 
+module TypeUtils = 
+    open Microsoft.FSharp.Reflection
+
+    let toString (x:'a) = 
+        match FSharpValue.GetUnionFields(x, typeof<'a>) with
+        | case, _ -> case.Name
+
+    let fromString<'a> (s:string) =
+        match FSharpType.GetUnionCases typeof<'a> |> Array.filter (fun case -> case.Name = s) with
+        |[|case|] -> Some(FSharpValue.MakeUnion(case,[||]) :?> 'a)
+        |_ -> None
+
 module Besorot =
     type BesorahReadings = JsonProvider<"./besorah-data.json">
     //type Reading = {
     //    parasha: string;
     //    reading: string
     //}
+
+    type ShabbatType = 
+        ``Bereshit``
+        |``Noach``
+        |``Lech-Lecha``
+        |``Vayera``
+        |``Chayei Sara``
+        |``Toldot``
+        |``Vayetzei``
+        |``Vayishlach``
+        |``Vayeshev``
+        |``Miketz``
+        |``Vayigash``
+        |``Vayechi``
+        |``Shemot``
+        |``Vaera``
+        |``Bo``
+        |``Beshalach``
+        |``Yitro``
+        |``Mishpatim``
+        |``Shabbat Shekalim``
+        |``Terumah``
+        |``Tetzaveh``
+        |``Shabbat Zachor``
+        |``Erev Purim``
+        |``Purim``
+        |``Ki Tisa``
+        |``Vayakhel-Pekudei``
+        |``Shabbat Parah``
+        |``Vayikra``
+        |``Shabbat HaChodesh``
+        |``Tzav``
+        |``Shabbat HaGadol``
+        |``Pesach I``
+        |``Pesach VII``
+        |``Pesach VIII``
+        |``Shmini``
+        |``Tazria-Metzora``
+        |``Achrei Mot-Kedoshim``
+        |``Emor``
+        |``Behar-Bechukotai``
+        |``Bamidbar``
+        |``Shavuot I``
+        |``Shavuot II``
+        |``Nasso``
+        |``Beha'alotcha``
+        |``Sh'lach``
+        |``Korach``
+        |``Chukat``
+        |``Balak``
+        |``Pinchas``
+        |``Rosh Chodesh Av``
+        |``Matot-Masei``
+        |``Devarim``
+        |``Shabbat Chazon``
+        |``Vaetchanan``
+        |``Shabbat Nachamu``
+        |``Eikev``
+        |``Re'eh``
+        |``Shoftim``
+        |``Ki Teitzei``
+        |``Ki Tavo``
+        |``Nitzavim``
+        |``Rosh Hashana I``
+        |``Rosh Hashana II``
+        |``Vayeilech``
+        |``Shabbat Shuva``
+        |``Erev Yom Kippur``
+        |``Yom Kippur``
+        |``Ha'Azinu``
+        |``Sukkot I``
+        |``Sukkot II``
+        |``Sukkot VII (Hoshana Raba)``
+        |``Shmini Atzeret``
+        |``Simchat Torah``
+        override this.ToString() = TypeUtils.toString this
+        static member FromString(s: string) = TypeUtils.fromString<ShabbatType> s
+
+
+    let getParashaFromTitle title =
+        ShabbatType.FromString title
+
 
     type Year = A | B | C
 

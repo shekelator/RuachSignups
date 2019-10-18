@@ -25,17 +25,25 @@ namespace RuachSignups.Controllers
             {
                 var jsonData = client.DownloadString("https://www.hebcal.com/hebcal/?v=1&cfg=json&year=now&month=x&maj=on&nx=on&ss=on&s=on&i=off");
 
-                var readings = Parshiot.ParseWithAliyah(jsonData, 6)
+                var readings = Parshiot.Parse(jsonData)
                     .Select(r => new ShabbatModel(r));
 
                 return View(readings);
             }
         }
 
-        // GET: Signups/Details/5
-        public ActionResult Details(int id)
+        // GET: Signups/Year/2021
+        public ActionResult Year(string year)
         {
-            return View();
+            using (var client = new WebClient())
+            {
+                var jsonData = client.DownloadString($"https://www.hebcal.com/hebcal/?v=1&cfg=json&year={year}&month=x&maj=on&nx=on&ss=on&s=on&i=off");
+
+                var readings = Parshiot.Parse(jsonData)
+                    .Select(r => new ShabbatModel(r));
+
+                return View(readings);
+            }
         }
 
         // GET: Signups/Create

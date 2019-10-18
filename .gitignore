@@ -11,6 +11,8 @@
 *.userprefs
 .vscode
 
+.ionide
+
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/

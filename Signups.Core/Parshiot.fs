@@ -2,12 +2,14 @@ namespace Signups.Core
 open FSharp.Data
 open System
 
+
 module Parshiot =
     type HcReadings = JsonProvider<"./hebcal-data.json">
     type Leyning = {
         Torah: string;
         Haftarah: string;
-        Maftir: string option
+        Maftir: string option;
+        Besorah: string;
     }
 
     type Reading = {
@@ -17,86 +19,17 @@ module Parshiot =
         Link: Uri
     }
  
-    type ShabbatType = 
-        ``Bereshit``
-        |``Noach``
-        |``Lech-Lecha``
-        |``Vayera``
-        |``Chayei Sara``
-        |``Toldot``
-        |``Vayetzei``
-        |``Vayishlach``
-        |``Vayeshev``
-        |``Miketz``
-        |``Vayigash``
-        |``Vayechi``
-        |``Shemot``
-        |``Vaera``
-        |``Bo``
-        |``Beshalach``
-        |``Yitro``
-        |``Mishpatim``
-        |``Shabbat Shekalim``
-        |``Terumah``
-        |``Tetzaveh``
-        |``Shabbat Zachor``
-        |``Erev Purim``
-        |``Purim``
-        |``Ki Tisa``
-        |``Vayakhel-Pekudei``
-        |``Shabbat Parah``
-        |``Vayikra``
-        |``Shabbat HaChodesh``
-        |``Tzav``
-        |``Shabbat HaGadol``
-        |``Pesach I``
-        |``Pesach VII``
-        |``Pesach VIII``
-        |``Shmini``
-        |``Tazria-Metzora``
-        |``Achrei Mot-Kedoshim``
-        |``Emor``
-        |``Behar-Bechukotai``
-        |``Bamidbar``
-        |``Shavuot I``
-        |``Shavuot II``
-        |``Nasso``
-        |``Beha'alotcha``
-        |``Sh'lach``
-        |``Korach``
-        |``Chukat``
-        |``Balak``
-        |``Pinchas``
-        |``Rosh Chodesh Av``
-        |``Matot-Masei``
-        |``Devarim``
-        |``Shabbat Chazon``
-        |``Vaetchanan``
-        |``Shabbat Nachamu``
-        |``Eikev``
-        |``Re'eh``
-        |``Shoftim``
-        |``Ki Teitzei``
-        |``Ki Tavo``
-        |``Nitzavim``
-        |``Rosh Hashana I``
-        |``Rosh Hashana II``
-        |``Vayeilech``
-        |``Shabbat Shuva``
-        |``Erev Yom Kippur``
-        |``Yom Kippur``
-        |``Ha'Azinu``
-        |``Sukkot I``
-        |``Sukkot II``
-        |``Sukkot VII (Hoshana Raba)``
-        |``Shmini Atzeret``
-        |``Simchat Torah``
-
     let maftirIfSpecial (maftir : string) = 
         if maftir.Contains("|") then Some maftir
         else None
 
-    let ConvertLeyning (leyning : HcReadings.Leyning option, aliyah: int option) =
+    let getBesorah title besorahYear = 
+        // let parasha = getParashaFromTitle title
+        // match parasha
+        // | Korach -> ""
+        "John 2:13–25"
+
+    let ConvertLeyning (leyning : HcReadings.Leyning option, title: String, aliyah: int option, besorahYear: Besorot.Year) =
         match leyning with
             | Some x -> 
                 {
@@ -111,23 +44,24 @@ module Parshiot =
                         | Some 7 -> x.``7``
                         | _ -> x.Torah;
                     Haftarah = x.Haftarah; 
-                    Maftir = maftirIfSpecial x.Maftir
+                    Maftir = maftirIfSpecial x.Maftir;
+                    Besorah = getBesorah title besorahYear
                 }
-            | None -> {Torah = ""; Haftarah = ""; Maftir = None}
+            | None -> {Torah = ""; Haftarah = ""; Maftir = None; Besorah = ""}
         
 
-    let ParseWithAliyah data (aliyah: int option) = 
+    let ParseWithAliyah data (aliyah: int option) (besorahYear: Besorot.Year) = 
         HcReadings.Parse(data).Items
             |> Seq.filter(fun i -> i.Leyning.IsSome)
             |> Seq.map(
                 fun i -> 
                 {
-                    Title=i.Title; 
+                    Title=i.Title.Replace("Parashat", ""); 
                     Date = i.Date; 
                     Link = new Uri(i.Link); 
-                    Leyning = ConvertLeyning(i.Leyning, aliyah)
+                    Leyning = ConvertLeyning(i.Leyning, i.Title, aliyah, besorahYear)
                 })
 
     let Parse data = 
-        ParseWithAliyah data (Some 5)
+        ParseWithAliyah data (Some 7) (Besorot.A)
 
