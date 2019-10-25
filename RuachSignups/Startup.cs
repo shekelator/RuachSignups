@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RuachSignups.Infrastructure;
+using Microsoft.Extensions.Logging;
 
 namespace RuachSignups
 {
@@ -19,6 +20,10 @@ namespace RuachSignups
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<ShabbatRepository>(ctx => new ShabbatRepository(Configuration["CosmosDbConnectionString"]));
+            services.AddLogging(l => {
+                l.AddConsole();
+                l.AddDebug();
+            });
             services.AddMvc();
         }
 
@@ -34,7 +39,7 @@ namespace RuachSignups
             {
                 app.UseExceptionHandler("/Home/Error");
             }
-
+            
             app.UseStaticFiles();
 
             app.UseMvc(routes =>
@@ -42,6 +47,9 @@ namespace RuachSignups
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Signups}/{action=Index}/{id?}");
+                //routes.MapRoute(
+                //    name: "year",
+                //    template: "{controller=Signups}/{action=Year}/{year}");
             });
         }
     }

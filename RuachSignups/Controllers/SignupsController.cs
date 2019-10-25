@@ -6,16 +6,19 @@ using Microsoft.AspNetCore.Mvc;
 using RuachSignups.Infrastructure;
 using RuachSignups.Models;
 using Signups.Core;
+using Microsoft.Extensions.Logging;
 
 namespace RuachSignups.Controllers
 {
     public class SignupsController : Controller
     {
         private readonly ShabbatRepository m_repository;
+        private readonly ILogger<SignupsController> _logger;
 
-        public SignupsController(ShabbatRepository repository)
+        public SignupsController(ShabbatRepository repository, ILogger<SignupsController> logger)
         {
             m_repository = repository;
+            _logger = logger;
         }
 
         // GET: Signups
@@ -33,16 +36,18 @@ namespace RuachSignups.Controllers
         }
 
         // GET: Signups/Year/2021
-        public ActionResult Year(string year)
+        public ActionResult Year(int id)
         {
             using (var client = new WebClient())
             {
-                var jsonData = client.DownloadString($"https://www.hebcal.com/hebcal/?v=1&cfg=json&year={year}&month=x&maj=on&nx=on&ss=on&s=on&i=off");
+                var url = $"https://www.hebcal.com/hebcal/?v=1&cfg=json&year={id}&month=x&maj=on&nx=on&ss=on&s=on&i=off";
+                _logger.LogDebug("Calling url: " + url);
+                var jsonData = client.DownloadString(url);
 
                 var readings = Parshiot.Parse(jsonData)
                     .Select(r => new ShabbatModel(r));
 
-                return View(readings);
+                return View("Index", readings);
             }
         }
 
