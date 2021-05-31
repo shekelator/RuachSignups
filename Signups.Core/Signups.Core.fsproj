@@ -1,33 +1,24 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
   </PropertyGroup>
-
   <ItemGroup>
     <Content Include="besorah-data.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Compile Include="Besorot.fs" />
-    <Compile Include="Parshiot.fs" />
-    <Compile Include="Shabbat.fs" />
+    <Compile Include="Besorot.fs"/>
+    <Compile Include="Parshiot.fs"/>
+    <Compile Include="Shabbat.fs"/>
   </ItemGroup>
-
   <ItemGroup>
-    <Content Include="hebcal-data.json" />
+    <Content Include="hebcal-data.json"/>
   </ItemGroup>
-
   <ItemGroup>
-    <None Include="Play.fsx" />
+    <None Include="Play.fsx"/>
   </ItemGroup>
-
   <ItemGroup>
-    <PackageReference Include="FSharp.Data" Version="3.0.0" />
-    <PackageReference Include="System.Globalization" Version="4.3.0" />
+    <PackageReference Include="System.Globalization" Version="4.3.0"/>
+    <PackageReference Include="FSharp.Data" Version="4.1.1"/>
+    <PackageReference Include="FSharp.Core" Version="5.0.1"/>
   </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Update="FSharp.Core" Version="4.5.2" />
-  </ItemGroup>
-
 </Project>

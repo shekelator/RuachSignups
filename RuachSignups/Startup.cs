@@ -24,7 +24,7 @@ namespace RuachSignups
                 l.AddConsole();
                 l.AddDebug();
             });
-            services.AddMvc();
+            services.AddMvc(mvcOptions => mvcOptions.EnableEndpointRouting = false);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -32,7 +32,7 @@ namespace RuachSignups
         {
             if (env.IsDevelopment())
             {
-                app.UseBrowserLink();
+                // app.UseBrowserLink();
                 app.UseDeveloperExceptionPage();
             }
             else

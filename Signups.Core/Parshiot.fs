@@ -56,7 +56,7 @@ module Parshiot =
             |> Seq.map(
                 fun i -> 
                 {
-                    Title=i.Title.Replace("Parashat", ""); 
+                    Title=i.Title.Replace("Parashat ", ""); 
                     Date = i.Date; 
                     Link = new Uri(i.Link); 
                     Leyning = ConvertLeyning(i.Leyning, i.Title, aliyah, besorahYear)

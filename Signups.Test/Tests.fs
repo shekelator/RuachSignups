@@ -8,13 +8,13 @@ open Signups.Core
 let ``Gets items`` () =
     let data = File.ReadAllText("./hebcal-data.json")
     let result = Parshiot.Parse(data)
-    Assert.Contains(result, fun x -> x.Title = "Parashat Shemot")
+    Assert.Contains(result, fun x -> x.Title = "Shemot")
 
 [<Fact>]
 let ``Gets Torah portion without aliyah`` () =
     let data = File.ReadAllText("./hebcal-data.json")
     let result = Parshiot.ParseWithAliyah data (Some 5) Besorot.Year.A
-    let parasha = Seq.find (fun (x: Parshiot.Reading) -> x.Title = "Parashat Chukat") result
+    let parasha = Seq.find (fun (x: Parshiot.Reading) -> x.Title = "Chukat") result
     Assert.Equal("Numbers 20:22 - 21:9", parasha.Leyning.Torah)
     Assert.Equal("Judges 11:1 - 11:33", parasha.Leyning.Haftarah)
     Assert.Equal("Mark 14:53-65", parasha.Leyning.Besorah)
@@ -23,7 +23,7 @@ let ``Gets Torah portion without aliyah`` () =
 let ``Gets Torah portion with aliyah`` () =
     let data = File.ReadAllText("./hebcal-data.json")
     let result = Parshiot.ParseWithAliyah data (Some 5) Besorot.Year.A
-    let parasha = Seq.find (fun (x: Parshiot.Reading) -> x.Title = "Parashat Chukat") result
+    let parasha = Seq.find (fun (x: Parshiot.Reading) -> x.Title = "Chukat") result
     Assert.Equal("Numbers 20:22 - 21:9", parasha.Leyning.Torah)
     Assert.Equal("Judges 11:1 - 11:33", parasha.Leyning.Haftarah)
 
@@ -31,5 +31,5 @@ let ``Gets Torah portion with aliyah`` () =
 let ``Maftir is left out unless it's a special shabbat`` () =
     let data = File.ReadAllText("./hebcal-data.json")
     let result = Parshiot.ParseWithAliyah data (Some 5) Besorot.Year.A
-    let parasha = Seq.find (fun (x: Parshiot.Reading) -> x.Title = "Parashat Ki Tisa") result
+    let parasha = Seq.find (fun (x: Parshiot.Reading) -> x.Title = "Ki Tisa") result
     Assert.False(parasha.Leyning.Maftir.IsSome)
