@@ -140,6 +140,49 @@ module Besorot =
         {Parasha = "Vayakhel"; Reading = "John 8:12–20"}
         {Parasha = "Pekudei"; Reading = "John 8:21–30"}
         {Parasha = "Vayakhel-Pekudei"; Reading = "John 8:12–30"}
+        {Parasha = "Vayikra"; Reading = ""}
+        {Parasha = "Tzav"; Reading = ""}
+        {Parasha = "Shmini"; Reading = ""}
+        {Parasha = "Tazria-Metzora"; Reading = ""}
+        {Parasha = "Tazria"; Reading = ""}
+        {Parasha = "Metzora"; Reading = ""}
+        {Parasha = "Achrei Mot-Kedoshim"; Reading = ""}
+        {Parasha = "Kedoshim"; Reading = ""}
+        {Parasha = "Achrei Mot"; Reading = ""}
+        {Parasha = "Emor"; Reading = ""}
+        {Parasha = "Behar"; Reading = ""}
+        {Parasha = "Bechukotai"; Reading = ""}
+        {Parasha = "Behar-Bechukotai"; Reading = ""}
+        {Parasha = "Bamidbar"; Reading = ""}
+        {Parasha = "Nasso"; Reading = ""}
+        {Parasha = "Beha'alotcha"; Reading = ""}
+        {Parasha = "Sh'lach"; Reading = ""}
+        {Parasha = "Korach"; Reading = ""}
+        {Parasha = "Chukat"; Reading = ""}
+        {Parasha = "Balak"; Reading = ""}
+        {Parasha = "Pinchas"; Reading = ""}
+        {Parasha = "Matot"; Reading = ""}
+        {Parasha = "Masei"; Reading = ""}
+        {Parasha = "Matot-Masei"; Reading = ""}
+        {Parasha = "Devarim"; Reading = ""}
+        {Parasha = "Vaetchanan"; Reading = ""}
+        {Parasha = "Eikev"; Reading = ""}
+        {Parasha = "Re'eh"; Reading = ""}
+        {Parasha = "Shoftim"; Reading = ""}
+        {Parasha = "Ki Teitzei"; Reading = ""}
+        {Parasha = "Ki Tavo"; Reading = ""}
+        {Parasha = "Nitzavim"; Reading = ""}
+        {Parasha = "Vayeilech"; Reading = ""}
+        {Parasha = "Ha'Azinu"; Reading = ""}
+        ]
+
+    let HolidayReadings = [
+        {Parasha = "Sukkot"; Reading = ""}
+        {Parasha = "Yom Kippur"; Reading = ""}
+        {Parasha = "Rosh Hashana"; Reading = ""}
+        {Parasha = "Shabbat Shuva"; Reading = ""}
+        {Parasha = "Rosh Hashana II"; Reading = ""}
+        {Parasha = "Shavuot I"; Reading = ""}
         ]
 
     let BesorotData (year: Year) =
@@ -166,7 +209,7 @@ module Besorot =
         let year = GetYear calendarYear
         let readings = BesorotData year
 
-        let found = readings |> Seq.find(fun i -> i.Parasha = parasha.Sedra)
+        let found = readings |> Seq.tryFind(fun i -> i.Parasha = parasha.Sedra)
         found
 
     let GetReadingBySedra calendarYear parasha =

@@ -18,7 +18,7 @@ let GetCycle cycleString =
 [<InlineData(5782)>]
 let ``Bereshit always has the beginning of John`` (year) =
     let result = Besorot.GetReadingBySedra year "Bereshit"
-    Assert.Equal("John 1:1–18", result.Reading)
+    Assert.Equal("John 1:1–18", Option.get(result).Reading)
 
 [<Theory>]
 [<InlineData(5777, "A")>]
@@ -41,7 +41,7 @@ let ``Chooses correct cycle based on year`` (year: int, cycleString: string) =
 [<InlineData("Yitro", 5782, "John 7:1–13")>]
 let ``Can get Yitro right`` (sedra: string, year: int, expected: string) =
     let result = Besorot.GetReadingBySedra year sedra
-    Assert.Equal(expected, result.Reading)
+    Assert.Equal(expected, Option.get(result).Reading)
 
 [<Theory>]
 [<InlineData("Mishpatim", 5782)>]
@@ -49,5 +49,5 @@ let ``Can get Yitro right`` (sedra: string, year: int, expected: string) =
 let ``Can get shabbat shekalim right`` (sedra: string, year: int) =
     let expected = "Mark 12:41-44"
     let result = Besorot.GetReading year {Sedra = sedra; Shabbat = Some SpecialShabbat.Shekalim}
-    Assert.Equal(expected, result.Reading)
+    Assert.Equal(expected, result.Value.Reading)
 
