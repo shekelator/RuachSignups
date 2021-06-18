@@ -1,6 +1,7 @@
 namespace Signups.Core
 open FSharp.Data
 open System
+open Besorot
 
 
 module Parshiot =
